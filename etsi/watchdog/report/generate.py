@@ -35,10 +35,23 @@ def generate_drift_report(
     metadata=None,
 ):
     """Generate a professional drift report in HTML or PDF."""
-    # Prepare drift summary table
-    df = pd.DataFrame.from_dict(drift_results, orient="index")
-    df.reset_index(inplace=True)
-    df.columns = ["Feature", "P-Value", "Statistic", "Drift"]
+    # Convert results dict to DataFrame
+    df = pd.DataFrame.from_dict(drift_results, orient="index").reset_index()
+    df.rename(columns={"index": "Feature"}, inplace=True)
+
+    # Try to keep only relevant columns if they exist
+    possible_cols = ["Feature", "p_value", "statistic", "drift", "P-Value", "Statistic", "Drift"]
+    df = df[[col for col in possible_cols if col in df.columns]]
+
+    # Ensure Drift column exists
+    if "Drift" not in df.columns:
+        if "p_value" in df.columns:
+            df["Drift"] = df["p_value"] < 0.05
+        elif "P-Value" in df.columns:
+            df["Drift"] = df["P-Value"] < 0.05
+        else:
+            df["Drift"] = False
+
     drift_table_html = df.to_html(index=False, classes="table", border=0)
 
     # Extract alert features
@@ -49,7 +62,7 @@ def generate_drift_report(
     for feature in df["Feature"]:
         if feature in ref_df.columns and feature in live_df.columns:
             try:
-                plot = plot_feature_distribution(ref_df[feature], live_df[feature])
+                plot = plot_feature_distribution(feature, ref_df[feature], live_df[feature])
                 plots.append(plot)
             except Exception as e:
                 print(f"Warning: Skipping plot for {feature} due to {e}")
@@ -78,9 +91,9 @@ def generate_drift_report(
 
     # Optional PDF export
     if format.lower() == "pdf":
-        from weasyprint import HTML  # ✅ Lazy import to prevent DLL crash
+        from weasyprint import HTML
         pdf_path = output_path.replace(".html", ".pdf")
         HTML(string=html_out).write_pdf(pdf_path)
-        print(f"PDF report saved to {pdf_path}")
+        print(f"✅ PDF report saved to {pdf_path}")
     else:
-        print(f"HTML report saved to {output_path}")
+        print(f"✅ HTML report saved to {output_path}")

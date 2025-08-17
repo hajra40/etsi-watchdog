@@ -19,6 +19,8 @@ from .compare import DriftComparator
 from .drift.base import DriftResult
 from .slack_notifier import SlackNotifier
 from .config import WatchdogConfig, quick_setup
+from .report.generate import generate_drift_report
+from .result import DriftResult
 
 __all__ = [
     "DriftCheck",
@@ -28,4 +30,6 @@ __all__ = [
     "SlackNotifier",
     "WatchdogConfig",
     "quick_setup",
+    "generate_drift_report",
+    "DriftResult"  
 ]

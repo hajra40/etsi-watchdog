@@ -5,21 +5,37 @@
   <title>etsi-watchdog Documentation</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <nav>
-    <h1>etsi</h1>
-    <ul>
+<body class="documentation">
+
+  <!-- navbar -->
+  <nav class="navbar">
+    <h1 class="logo">etsi Documentation</h1>
+    <ul class="nav-links">
       <li><a href="etsi-watchdog.html" class="active">etsi-watchdog</a></li>
       <li><a href="etsi-failprint.html">etsi-failprint</a></li>
       <li><a href="etsi-etna.html">etsi-etna</a></li>
     </ul>
   </nav>
-  <main>
+
+  <div class="shine-container">
+    <a href="https://github.com/etsi-ai/etsi-watchdog" target="_blank" class="shine-text">
+      Visit GitHub to Contribute
+    </a>
+  </div>
+
+
+
+  <main class="content">
     <h2>etsi-watchdog</h2>
     <p><strong>etsi-watchdog</strong> is a lightweight Python library for detecting tabular data drift using statistical tests like PSI. It's modular, production-ready, and ideal for ML validation pipelines and scheduled monitoring tasks.</p>
-    <br>
+    <hr>
+
+    <!-- install the package -->
     <h3>Installation</h3>
-    <pre><code>pip install etsi-watchdog</code></pre>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+      <pre><code>pip install etsi-watchdog</code></pre>
+    </div>
 
     <h3>Core Components</h3>
     <table>
@@ -108,42 +124,25 @@
         </tr>
       </tbody>
     </table>
-
+    
+    <!-- code samples -->
     <h3>Example: One-time Check</h3>
-    <pre><code>from etsi.watchdog import DriftCheck
-
-check = DriftCheck(reference_df)
-results = check.run(current_df, features=["age", "salary"])
-
-for feature, result in results.items():
-    print(result.summary())
-    result.plot()
-    result.to_json(f"logs/drift_{feature}.json")
-</code></pre>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+      <pre><code id="example-one-time"></code></pre>
+    </div>
 
     <h3>Example: Scheduled Monitoring</h3>
-    <pre><code>from etsi.watchdog import Monitor
-
-monitor = Monitor(reference_df)
-monitor.enable_logging("logs/rolling_log.csv")
-
-monitor.watch_rolling(
-    df=live_df,
-    window=50,
-    freq="D",
-    features=["age", "salary"]
-)
-</code></pre>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+      <pre><code id="example-monitor"></code></pre>
+    </div>
 
     <h3>Example: Version Comparison</h3>
-    <pre><code>from etsi.watchdog import DriftComparator
-
-comp = DriftComparator(run1_results, run2_results)
-diff = comp.diff()
-
-for feature, delta in diff.items():
-    print(f"{feature}: Δ PSI = {delta:+.4f}")
-</code></pre>
+    <div class="code-block">
+      <button class="copy-btn" onclick="copyCode(this)">Copy Code</button>
+      <pre><code id="example-compare"></code></pre>
+    </div>
 
     <h3>Resources</h3>
     <div class="resource-links">
@@ -153,5 +152,36 @@ for feature, delta in diff.items():
     </div>
 
   </main>
+  <script>
+    function copyCode(button) {
+      const code = button.nextElementSibling.innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        button.textContent = "✅ Copied!";
+        setTimeout(() => button.textContent = "Copy Code", 1500);
+      }).catch(err => {
+        console.error("Failed to copy code: ", err);
+      });
+    }
+
+
+    fetch("website_code_samples/one_time_check.py")
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById("example-one-time").textContent = data;
+    });
+
+    fetch("website_code_samples/scheduled_monitor.py")
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById("example-monitor").textContent = data;
+    });
+
+    fetch("website_code_samples/version_comparison.py")
+    .then(response => response.text())
+    .then(data => {
+      document.getElementById("example-compare").textContent = data;
+    });
+    </script>
+
 </body>
 </html>

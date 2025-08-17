@@ -1,0 +1,183 @@
+.documentation {
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;    
+  max-width: 900px;       /* Keeps lines readable on large screens */
+  margin: 10px auto;     
+  /* padding: 20px;          Space inside the content area */
+  background: #fff;       /* White background for contrast */
+  border-radius: 8px;     /* Slightly rounded corners */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); /* Subtle shadow */
+  line-height: 1.6;       /* Improves text readability */
+}
+
+
+.content {
+  max-width: 900px;       
+  margin: 10px auto;      /* Centers content horizontally */
+  padding: 20px;          /* Space inside the content area */
+}
+
+
+/* Contribute text */
+.shine-container {
+  text-align: center;
+  background-color: #e7e7e7;
+  padding: 5px 10px;
+}
+
+.shine-text {
+  display: inline-block;
+  font-size: 1rem;
+  color: #000;
+  text-decoration: none;
+  background: linear-gradient(90deg, #000, #c9c9c9, #000);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine 3s linear infinite;
+}
+
+.shine-text:hover {
+  transform: scale(1.05);
+  transition: transform 0.2s;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: 0% center;
+  }
+}
+
+
+/* navbar style */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;       /* Dark background */
+  padding: 10px 20px;
+  border-radius: 8px 8px 0px 0px; /* Rounded corners on the left */
+}
+
+.logo {
+  color: #fff;
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px; /* Space between links */
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li a {
+  color: #ccc;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+
+.nav-links li a:hover {
+  color: #fff; /* Brighter on hover */
+}
+
+.nav-links li a.active {
+  color: #4cafef; /* Highlight active link */
+  font-weight: bold;
+}
+
+
+
+/* code block style */
+
+.code-block {
+  position: relative;
+  background: #f5f5f5;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.code-block pre {
+  margin: 0;
+  padding: 1em;
+  overflow-x: auto;
+}
+
+.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #eee;
+  border: none;
+  padding: 5px 8px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 0.9em;
+  transition: background 0.2s;
+}
+
+.copy-btn:hover {
+  background: #ddd;
+}
+
+
+
+/* table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 0.95rem;
+  background-color: #fff;
+}
+
+thead {
+  background-color: #f4f4f4;
+}
+
+th, td {
+  text-align: left; /* Left-align text */
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  vertical-align: top;
+  border-radius: 8px 0px 0px 0px;
+}
+
+th {
+  font-weight: bold;
+  border-radius: 8px 8px 0px 0px;
+}
+
+tr:hover {
+  background-color: #f9f9f9; /* Subtle hover effect */
+}
+
+code {
+  background: #f5f5f5;
+  padding: 2px 5px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+/* Responsive: stack links under logo */
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    width: 100%;
+    margin-top: 5px;
+    font-size: small;
+  }
+
+  .nav-links {
+    margin: 10px auto;
+  }
+
+  .nav-links li {
+    text-align: left; /* left align links when stacked */
+  }
+}
